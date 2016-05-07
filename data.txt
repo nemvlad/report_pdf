@@ -1,3 +1,40 @@
+<?php
+
+function getDataFromSerice() {
+	$object = [];
+	
+	
+	$object['id'] = 45;
+	$object['status'] = 45;
+	$object['parameter'] = array(
+		'report_class' => 4,
+		'report_template' => 15,
+		'delayed_result' => 1,
+		'device_role_type_id' => 1,
+		'object' => 91180,
+		'object_name' => 'Министерство социального развития Московской области',
+		'report_class_name' => 'Сводный отчет по услугам',
+		'report_template_name' => 'Новый сводный отчет',
+		'time_start' => 1460840400,
+		'time_end' => 1461099600,
+		'time_request' => 1462607827,
+		'report_object_type_id' => 440
+	
+	);
+	$object['time_create'] = 45;
+	$object['time_start'] = 45;
+	$object['time_end'] = 45;
+	
+	$object = (object)$object;
+	
+	
+	print_r($object);
+	
+	return $object;
+}
+
+getDataFromSerice();
+
 [Sat, 07 May 2016 14:47:52 +0300][/index.php][10.200.1.93] rrrrrrrrrrr
 [Sat, 07 May 2016 14:47:52 +0300][/index.php][10.200.1.93] stdClass Object
 (
