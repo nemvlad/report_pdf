@@ -1,41 +1,508 @@
 <?php
+require_once 'lib.php';
 
-function getDataFromSerice() {
-	$object = [];
-	
-	
-	$object['id'] = 45;
-	$object['status'] = 45;
-	$object['parameter'] = array(
-		'report_class' => 4,
-		'report_template' => 15,
-		'delayed_result' => 1,
-		'device_role_type_id' => 1,
-		'object' => 91180,
-		'object_name' => 'Министерство социального развития Московской области',
-		'report_class_name' => 'Сводный отчет по услугам',
-		'report_template_name' => 'Новый сводный отчет',
-		'time_start' => 1460840400,
-		'time_end' => 1461099600,
-		'time_request' => 1462607827,
-		'report_object_type_id' => 440
-	
-	);
-	$object['time_create'] = 45;
-	$object['time_start'] = 45;
-	$object['time_end'] = 45;
-	
-	$object = (object)$object;
-	
-	
-	print_r($object);
-	
-	return $object;
+function getDataFromService()
+{
+    $object = array(
+        'id' => 45,
+        'status' => 3,
+        'parameter' => (object)array(
+            'report_class' => 4,
+            'report_template' => 15,
+            'delayed_result' => 1,
+            'device_role_type_id' => 1,
+            'object' => 91180,
+            'object_name' => 'Министерство социального развития Московской области',
+            'report_class_name' => 'Сводный отчет по услугам',
+            'report_template_name' => 'Новый сводный отчет',
+            'time_start' => 1460840400,
+            'time_end' => 1461099600,
+            'time_request' => 1462607827,
+            'report_object_type_id' => 440
+        ),
+        'time_create' => '2016-05-07 10:55:47',
+        'time_start' => 1460840400,
+        'time_end' => 1461099600,
+
+        'report_template' => (object)array(
+            'id' => 15,
+            'name' => 'Новый сводный отчет',
+            'description' => null,
+            'time_create' => '2016-04-26 16:12:20',
+            'time_change' => '2016-04-26 16:12:23',
+            'report_class' => 4,
+            'metric' => '[{
+		"code": "code#1",
+	"name": "К-т доступ ности услуги",
+	"report_threshold_group": "1",
+	"threshold_name": null,
+	"items": [{
+			"index": 0,
+		"algorithm": "AVG(availability_index)",
+		"format_type": 1,
+		"format": "%s",
+		"comparison_value": "0.995",
+		"comparison_operator": "<"
+	},
+	{
+		"index": 1,
+		"algorithm": "SUM(duration)",
+		"format_type": 3
+	}]
+},
+{
+	"code": "code#2",
+	"name": "Время задержки пакетов, не более, мс",
+	"report_threshold_group": "3",
+	"threshold_name": null,
+	"items": [{
+	"index": 0,
+		"format_type": 1,
+		"format": "%s",
+		"algorithm": "MAX(max)"
+	},
+	{
+		"index": 1,
+		"format_type": 3,
+		"algorithm": "SUM(duration)",
+		"hidden":1
+
+	}]
+},
+{
+	"code": "code#3",
+	"name": "Вариация времени задержки пакетов, не более, мс",
+	"report_threshold_group": "4",
+	"threshold_name": null,
+	"items": [{
+	"index":0,
+		"algorithm": "MAX(max)",
+		"format_type": 1,
+		"format": "%s"
+	},
+	{
+		"index":1,
+		"algorithm": "SUM(duration)",
+		"format_type": 3,
+		"hidden":1
+	}]
+},
+{
+	"code": "code#4",
+	"name": "Потери пакетов, %, не более",
+	"report_threshold_group": "2",
+	"threshold_name": null,
+	"items": [{
+	"index":0,
+		"algorithm": "MAX(max)",
+		"format_type": 1,
+		"format": "%s"
+	},
+	{
+		"index":1,
+		"algorithm": "SUM(duration)",
+		"format_type": 3,
+		"hidden":1
+	}]
+},
+{
+	"code": "synthetic_test",
+	"name": "Тестим синтетик",
+	"threshold_name": null,
+	"items": [{
+	"index":0,
+		"format_type": 3,
+		"format": "%s",
+		"value_expression":
+		{
+			"operator":"+",
+			"arguments":[ "${code#2.2}", "${code#3.2}" ]
+		},
+		"threshold_expression":
+		{
+			"operator":"*",
+			"arguments":[ "${period}", "0.995"]
+		},
+		"comparison_operator": ">="
+	}]
+}]',
+
+            'fields' => '{
+		"administration": {
+			"name": "Пользователь"
+	},
+	"region": {
+			"name": "Регион"
+	},
+	"office": {
+			"name": "Наименование объекта"
+	},
+	"city": {
+			"name": "Город"
+	},
+	"street": {
+			"name": "Улица"
+	},
+	"house": {
+			"name": "Дом"
+	},
+	"service_item": {
+			"id": "id услуги",
+		"name": "Услуга"
+	},
+	"service": {
+			"id": "id сервиса",
+		"name": "Вид услуги"
+	},
+	"link": {
+			"bw": "Скорость, Мбит"
+	}
+}',
+            'parameter' => '{
+		"header":"Министерство государственного управления, информационных технологий и связи Московской области",
+"title":"Сводный отчет по качеству оказываемых услуг согласно Государственного контракта № 0148200005414001014 на оказание телекоммуникационных услуг для центральных исполнительных органов государственной власти и государственных органов Московской области в период 2015-2017 гг.",
+"summary_table": "1"
+}',
+            'period' => 2
+        ),
+
+
+        'data' => (object)array(
+            'summary' => array(
+                0 => (object)array(
+                    'service_id' => 91159,
+                    'service_name' => 'Internet',
+                    'total_items' => 75,
+                    'items_with_errors' => 75,
+                    'thresholds' => (object)array(
+                        'code#1' => (object)array(
+                            'value' => array(
+                                0 => 100,
+                                1 => 100
+                            ),
+                            'operator' => array(
+                                0 => '<',
+                                1 => '<'
+                            )
+                        ),
+                        'code#2' => (object)array(
+                            'value' => array(
+                                0 => 250,
+                                1 => 250
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'code#3' => (object)array(
+                            'value' => array(
+                                0 => 100,
+                                1 => 100
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'code#4' => (object)array(
+                            'value' => array(
+                                0 => 0.1,
+                                1 => 0.1
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'synthetic_test' => (object)array(
+                            'value' => array(
+                                0 => 257904
+                            ),
+                            'operator' => array(
+                                0 => '>='
+                            )
+                        )
+                    )
+                ),
+
+                1 => (object)array(
+                    'service_id' => 91160,
+                    'service_name' => 'ВЦКС',
+                    'total_items' => 0,
+                    'items_with_errors' => 0,
+                    'thresholds' => (object)array(
+                        'code#1' => (object)array(
+                            'value' => array(
+                                0 => 100,
+                                1 => 100
+                            ),
+                            'operator' => array(
+                                0 => '<',
+                                1 => '<'
+                            )
+                        ),
+                        'code#2' => (object)array(
+                            'value' => array(
+                                0 => 100,
+                                1 => 100
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'code#3' => (object)array(
+                            'value' => array(
+                                0 => 50,
+                                1 => 50
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'code#4' => (object)array(
+                            'value' => array(
+                                0 => 0.1,
+                                1 => 0.1
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'synthetic_test' => (object)array(
+                            'value' => array(
+                                0 => 257904
+                            ),
+                            'operator' => array(
+                                0 => '>='
+                            )
+                        )
+                    )
+                ),
+
+                2 => (object)array(
+                    'service_id' => 91161,
+                    'service_name' => 'L3',
+                    'total_items' => 0,
+                    'items_with_errors' => 0,
+                    'thresholds' => (object)array(
+                        'code#1' => (object)array(
+                            'value' => array(
+                                0 => 100,
+                                1 => 100
+                            ),
+                            'operator' => array(
+                                0 => '<',
+                                1 => '<'
+                            )
+                        ),
+                        'code#2' => (object)array(
+                            'value' => array(
+                                0 => 100,
+                                1 => 100
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'code#3' => (object)array(
+                            'value' => array(
+                                0 => 50,
+                                1 => 50
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'code#4' => (object)array(
+                            'value' => array(
+                                0 => 0.1,
+                                1 => 0.1
+                            ),
+                            'operator' => array(
+                                0 => '>=',
+                                1 => '>='
+                            )
+                        ),
+                        'synthetic_test' => (object)array(
+                            'value' => array(
+                                0 => 257904
+                            ),
+                            'operator' => array(
+                                0 => '>='
+                            )
+                        )
+                    )
+                ),
+
+                3 => (object)array(
+                    'service_id' => 91162,
+                    'service_name' => 'L2',
+                    'total_items' => 7,
+                    'items_with_errors' => 7,
+                    'thresholds' => (object)array(
+                        'code#1' => (object)array(
+                            'value' => array(
+                                0 => null,
+                                1 => null
+                            ),
+                            'operator' => array(
+                                0 => null,
+                                1 => null
+                            )
+                        ),
+                        'code#2' => (object)array(
+                            'value' => array(
+                                0 => null,
+                                1 => null
+                            ),
+                            'operator' => array(
+                                0 => null,
+                                1 => null
+                            )
+                        ),
+                        'code#3' => (object)array(
+                            'value' => array(
+                                0 => null,
+                                1 => null
+                            ),
+                            'operator' => array(
+                                0 => null,
+                                1 => null
+                            )
+                        ),
+                        'code#4' => (object)array(
+                            'value' => array(
+                                0 => null,
+                                1 => null
+                            ),
+                            'operator' => array(
+                                0 => null,
+                                1 => null
+                            )
+                        ),
+                        'synthetic_test' => (object)array(
+                            'value' => array(
+                                0 => 257904
+                            ),
+                            'operator' => array(
+                                0 => '>='
+                            )
+                        )
+                    )
+                )
+            ),
+
+            'data' => array(
+                0 => (object)array(
+                    'equipment' => 94621,
+                    'device' => 96752,
+                    'link' => 94622,
+                    'code#1' => Array
+                    (
+                        0 => 0.508,
+                        1 => 127360.000
+                    ),
+
+                    'code#2' => array
+                    (
+                        0 => null,
+                        1 => 0.000
+                    ),
+
+                    'code#3' => array
+                    (
+                        0 => null,
+                        1 => 0.000
+                    ),
+
+                    'code#4' => array
+                    (
+                        0 => null,
+                        1 => 0.000
+                    ),
+
+                    'synthetic_test' => array
+                    (
+                        0 => 0
+                    ),
+
+                    'administration.name' => 'Министерство социального развития Московской области',
+                    'region.name' => 'Московская область',
+                    'office.name' => 'Ступинское Управление социальной защиты населения',
+                    'city.name' => 'Ступино город',
+                    'street.name' => 'Победы проспект',
+                    'house.name' => 'дом 51',
+                    'service_item . id' => 91163,
+                    'service_item . name' => 'Internet',
+                    'service.id' => 91159,
+                    'service . name' => 'Internet',
+                    'link.bw' => 10
+                ),
+
+                1 => (object)array(
+                    'equipment' => 94619,
+                    'device' => 96753,
+                    'link' => 94620,
+                    'code#1' => Array
+                    (
+                        0 => 0.508,
+                        1 => 127360.000
+                    ),
+
+                    'code#2' => array
+                    (
+                        0 => null,
+                        1 => 0.000
+                    ),
+
+                    'code#3' => array
+                    (
+                        0 => null,
+                        1 => 0.000
+                    ),
+
+                    'code#4' => array
+                    (
+                        0 => null,
+                        1 => 5760.000
+                    ),
+
+                    'synthetic_test' => array
+                    (
+                        0 => 0
+                    ),
+
+                    'administration.name' => 'Министерство социального развития Московской области',
+                    'region.name' => 'Московская область',
+                    'office.name' => 'Ступинское Управление социальной защиты населения',
+                    'city.name' => 'Ступино город',
+                    'street.name' => 'Андропова улица',
+                    'house.name' => 'дом 30/23',
+                    'service_item . id' => 91163,
+                    'service_item . name' => 'Internet',
+                    'service.id' => 91159,
+                    'service . name' => 'Internet',
+                    'link.bw' => 10
+                )
+            )
+        )
+
+    );
+
+
+    $object = (object)$object;
+
+    return $object;
 }
 
-getDataFromSerice();
 
-
+/*
 [Sat, 07 May 2016 14:47:52 +0300][/index.php][10.200.1.93] rrrrrrrrrrr
 [Sat, 07 May 2016 14:47:52 +0300][/index.php][10.200.1.93] stdClass Object
 (
@@ -60,6 +527,8 @@ getDataFromSerice();
     [time_create] => 2016-05-07 10:55:47
     [time_start] => 1460840400
     [time_end] => 1461099600
+
+
     [report_template] => stdClass Object
         (
             [id] => 15
@@ -2927,3 +3396,4 @@ getDataFromSerice();
 )
 
 [Sat, 07 May 2016 14:47:52 +0300][/index.php][10.200.1.93] rrrrrrrrrrr
+*/

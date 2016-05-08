@@ -1,19 +1,5 @@
 <?php
 
-namespace models\reports;
-
-use \models\SlaModel;
-use models\systemsettings\ReportTemplateModel;
-use \PHPExcel;
-use \PHPExcel_Cell;
-use \PHPExcel_IOFactory;
-use \PHPExcel_Settings;
-use \PHPExcel_Style_Alignment;
-use \PHPExcel_Worksheet_PageSetup;
-use \TCPDF;
-use \TCPDF_FONTS;
-
-require_once __DIR__ . '/../../lib/config.php';
 
 class ReportModel extends SlaModel
 {
@@ -1636,7 +1622,7 @@ class ReportModel extends SlaModel
 	 * @param $reportData
 	 * @return array
 	 */
-	private function prepareSummaryData($reportData)
+	public function prepareSummaryData($reportData)
 	{
 
 

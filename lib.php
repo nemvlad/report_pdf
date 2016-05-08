@@ -13,7 +13,7 @@
  * @param type $message
  * @param type $num
  */
-function toLog($message='') {
+function toLog2($message='') {
     if (is_object($message) || is_array($message)) {
         $message = print_r($message, true);
     }
@@ -41,30 +41,32 @@ function toLog($message='') {
 
 
 
-function tolog2( $msg , $bin = false )
+function tolog( $msg , $bin = false )
 {
     $msg = print_r($msg, true);
 
-    $script = getScriptName();
+    $script = 'test';
 
-    $ip = getRemoteIP();
+    $ip = '10.0.0.1';//getRemoteIP();
 
-    $logfile = dirname( __FILE__ ).sprintf( "/../logs/%s-%s.log",date( 'Ymd', time() ), basename( $script ) );
+    $logfile = 'testlog.log';
 
     $fp = @fopen($logfile, "ab+");
 
-    chmod($logfile, 0666);
+    //chmod($logfile, 0666);
 
-    if (!$fp) return false;
+    if (!$fp) {
+
+        return false;
+    }
 
     if ($fp && is_resource( $fp )) {
 
-        if (!$bin) {
 
+        if (!$bin) {
             @fwrite( $fp, sprintf( "[%s][%s][%s] %s\n", date( 'D, d M Y H:i:s O', time() ), $script, $ip, $msg ) );
 
         } else {
-
             $msg = bin2hex($msg);
 
             @fwrite($fp, sprintf("[%s][%s][%s] binary bytes: %d \n", date('D, d M Y H:i:s O', time()), $script, $ip, (strlen( $msg ) / 2)));
