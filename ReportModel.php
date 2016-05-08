@@ -259,17 +259,17 @@ class ReportModel extends SlaModel
 		 */
 
 
-		$excelSheet->getCell('A4')->setValue('Период:');
+		$excelSheet->getCell('A4')->setValue('РџРµСЂРёРѕРґ:');
 		$excelSheet->mergeCells('B4:' . PHPExcel_Cell::stringFromColumnIndex($sheetMaxColumnIndex - 1) . '4')
 			->getCell('B4')
-			->setValue('С ' . $objectsData['time_start'] . ' по ' . $objectsData['time_end']);
+			->setValue('РЎ ' . $objectsData['time_start'] . ' РїРѕ ' . $objectsData['time_end']);
 
-		$excelSheet->getCell('A5')->setValue('Сформирован:');
+		$excelSheet->getCell('A5')->setValue('РЎС„РѕСЂРјРёСЂРѕРІР°РЅ:');
 		$excelSheet->mergeCells('B5:' . PHPExcel_Cell::stringFromColumnIndex($sheetMaxColumnIndex - 1) . '5')
 			->getCell('B5')
 			->setValue($objectsData['time_create']);
 
-		$excelSheet->getCell('A6')->setValue('Объект:');
+		$excelSheet->getCell('A6')->setValue('РћР±СЉРµРєС‚:');
 		$excelSheet->mergeCells('B6:' . PHPExcel_Cell::stringFromColumnIndex($sheetMaxColumnIndex - 1) . '6')
 			->getCell('B6')
 			->setValue($objectsData['object_name']);
@@ -326,10 +326,10 @@ class ReportModel extends SlaModel
 
 		$servicesChartLegend = new \PHPExcel_Chart_Legend(\PHPExcel_Chart_Legend::POSITION_RIGHT, null, false);
 
-		$servicesChartTitle = new \PHPExcel_Chart_Title('Состояние оказания услуг');
+		$servicesChartTitle = new \PHPExcel_Chart_Title('РЎРѕСЃС‚РѕСЏРЅРёРµ РѕРєР°Р·Р°РЅРёСЏ СѓСЃР»СѓРі');
 
 		$servicesChart = new \PHPExcel_Chart(
-			'Состояние оказания услуг',
+			'РЎРѕСЃС‚РѕСЏРЅРёРµ РѕРєР°Р·Р°РЅРёСЏ СѓСЃР»СѓРі',
 			$servicesChartTitle,
 			$servicesChartLegend,
 			$servicesChartPlotArea,
@@ -355,12 +355,12 @@ class ReportModel extends SlaModel
 			if ($objectsData['summary']['count_thresholds'] > 1) {
 				$excelSheet->mergeCells('B' . $servicesInfoFirstRowIndex . ':' . $thresholdLastColumnIndex . $servicesInfoFirstRowIndex);
 			}
-			$excelSheet->getCell('B' . $servicesInfoFirstRowIndex)->setValue('Пороговые значения');
+			$excelSheet->getCell('B' . $servicesInfoFirstRowIndex)->setValue('РџРѕСЂРѕРіРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ');
 		}
 
 		$excelSheet->mergeCells($statisticTotalColumnIndex . $servicesInfoFirstRowIndex . ':' . $statisticTotalWithoutErrorsColumnIndex . $servicesInfoFirstRowIndex)
 			->getCell($statisticTotalColumnIndex . $servicesInfoFirstRowIndex)
-			->setValue('Состояние оказания услуг');
+			->setValue('РЎРѕСЃС‚РѕСЏРЅРёРµ РѕРєР°Р·Р°РЅРёСЏ СѓСЃР»СѓРі');
 
 		$excelSheet->fromArray(
 			array_slice($objectsData['summary']['thead'], 1),
@@ -384,7 +384,7 @@ class ReportModel extends SlaModel
 		if ($objectsData['summary']['count_thresholds'] > 0) {
 			$excelSheet->mergeCells('A' . $servicesInfoLastRowIndex . ':' . $thresholdLastColumnIndex . $servicesInfoLastRowIndex);
 		}
-		$excelSheet->getCell('A' . $servicesInfoLastRowIndex)->setValue('Итого:');
+		$excelSheet->getCell('A' . $servicesInfoLastRowIndex)->setValue('РС‚РѕРіРѕ:');
 		$excelSheet->getCell($statisticTotalColumnIndex . $servicesInfoLastRowIndex)->setValue($objectsData['summary']['sum_total_items']);
 		$excelSheet->getCell($statisticTotalWithErrorsColumnIndex . $servicesInfoLastRowIndex)->setValue($objectsData['summary']['sum_items_with_errors']);
 		$excelSheet->getCell($statisticTotalWithoutErrorsColumnIndex . $servicesInfoLastRowIndex)->setValue($objectsData['summary']['sum_items_without_errors']);
@@ -396,7 +396,7 @@ class ReportModel extends SlaModel
 		// Add note
 		$excelSheet->mergeCells('A' . ($servicesInfoLastRowIndex + 1) . ':' . $statisticTotalWithoutErrorsColumnIndex . ($servicesInfoLastRowIndex + 1))
 			->getCell('A' . ($servicesInfoLastRowIndex + 1))
-			->setValue('* Приведенные параметры качества измеряются при загрузке канала доступа к L2/L3 VPN или канала доступа в сеть «Интернет» не более 75% от установленной скорости потока данных');
+			->setValue('* РџСЂРёРІРµРґРµРЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ РєР°С‡РµСЃС‚РІР° РёР·РјРµСЂСЏСЋС‚СЃСЏ РїСЂРё Р·Р°РіСЂСѓР·РєРµ РєР°РЅР°Р»Р° РґРѕСЃС‚СѓРїР° Рє L2/L3 VPN РёР»Рё РєР°РЅР°Р»Р° РґРѕСЃС‚СѓРїР° РІ СЃРµС‚СЊ В«РРЅС‚РµСЂРЅРµС‚В» РЅРµ Р±РѕР»РµРµ 75% РѕС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕР№ СЃРєРѕСЂРѕСЃС‚Рё РїРѕС‚РѕРєР° РґР°РЅРЅС‹С…');
 		$excelSheet->getStyle('A' . ($servicesInfoLastRowIndex + 1))->applyFromArray($textStyle);
 
 
@@ -411,7 +411,7 @@ class ReportModel extends SlaModel
 
 		$excelSheet->mergeCells('A' . $detailInfoFirstRowIndex . ':' . PHPExcel_Cell::stringFromColumnIndex($detailColumnsCount - 1) . $detailInfoFirstRowIndex)
 			->getCell('A' . $detailInfoFirstRowIndex)
-			->setValue('Услуги с нарушениями SLA');
+			->setValue('РЈСЃР»СѓРіРё СЃ РЅР°СЂСѓС€РµРЅРёСЏРјРё SLA');
 
 		if (empty($detailThresholdColumns)) {
 			$detailInfoDataFirstRowIndex = $detailInfoFirstRowIndex + 2;
@@ -435,8 +435,8 @@ class ReportModel extends SlaModel
 						->setValue($objectsData['services_with_errors']['thead'][$columnIndex]);
 					$excelSheet->getRowDimension($detailInfoFirstRowIndex + 1)->setRowHeight(30);
 
-					$excelSheet->getCell(PHPExcel_Cell::stringFromColumnIndex($detailInfoColumnIndex) . ($detailInfoFirstRowIndex + 2))->setValue('Значение');
-					$excelSheet->getCell(PHPExcel_Cell::stringFromColumnIndex($detailInfoColumnIndex + 1) . ($detailInfoFirstRowIndex + 2))->setValue('Пороговое значение');
+					$excelSheet->getCell(PHPExcel_Cell::stringFromColumnIndex($detailInfoColumnIndex) . ($detailInfoFirstRowIndex + 2))->setValue('Р—РЅР°С‡РµРЅРёРµ');
+					$excelSheet->getCell(PHPExcel_Cell::stringFromColumnIndex($detailInfoColumnIndex + 1) . ($detailInfoFirstRowIndex + 2))->setValue('РџРѕСЂРѕРіРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ');
 					$detailInfoColumnIndex += 2;
 				} else {
 					$excelSheet->mergeCells(PHPExcel_Cell::stringFromColumnIndex($detailInfoColumnIndex) . ($detailInfoFirstRowIndex + 1) . ':' . PHPExcel_Cell::stringFromColumnIndex($detailInfoColumnIndex) . ($detailInfoFirstRowIndex + 2))
@@ -621,14 +621,14 @@ class ReportModel extends SlaModel
 		 */
 
 
-		$excelSheet->getCell('A' . $lastRowIndex)->setValue('Период:');
+		$excelSheet->getCell('A' . $lastRowIndex)->setValue('РџРµСЂРёРѕРґ:');
 		$excelSheet->mergeCells('B' . $lastRowIndex . ':' . $lastColumnStringIndex . $lastRowIndex);
 		if (isset($reportData['time_start']) && isset($reportData['time_end'])) {
-			$excelSheet->getCell('B' . $lastRowIndex)->setValue('С ' . $reportData['time_start'] . ' по ' . $reportData['time_end']);
+			$excelSheet->getCell('B' . $lastRowIndex)->setValue('РЎ ' . $reportData['time_start'] . ' РїРѕ ' . $reportData['time_end']);
 		}
 		++$lastRowIndex;
 
-		$excelSheet->getCell('A' . $lastRowIndex)->setValue('Сформирован:');
+		$excelSheet->getCell('A' . $lastRowIndex)->setValue('РЎС„РѕСЂРјРёСЂРѕРІР°РЅ:');
 		$excelSheet->mergeCells('B' . $lastRowIndex . ':' . $lastColumnStringIndex . $lastRowIndex);
 		if (isset($reportData['time_create'])) {
 			$excelSheet->getCell('B' . $lastRowIndex)
@@ -636,7 +636,7 @@ class ReportModel extends SlaModel
 		}
 		++$lastRowIndex;
 
-		$excelSheet->getCell('A' . $lastRowIndex)->setValue('Объект:');
+		$excelSheet->getCell('A' . $lastRowIndex)->setValue('РћР±СЉРµРєС‚:');
 		$excelSheet->mergeCells('B' . $lastRowIndex . ':' . $lastColumnStringIndex . $lastRowIndex);
 		if (isset($reportData['object_name'])) {
 			$excelSheet->getCell('B' . $lastRowIndex)
@@ -662,7 +662,7 @@ class ReportModel extends SlaModel
 
 			$excelSheet->mergeCells('A' . $lastRowIndex . ':' . $summaryLastColumnStringIndex . $lastRowIndex)
 				->getCell('A' . $lastRowIndex)
-				->setValue('Информация об услуге');
+				->setValue('РРЅС„РѕСЂРјР°С†РёСЏ РѕР± СѓСЃР»СѓРіРµ');
 			$excelSheet->getStyle('A' . $lastRowIndex)->applyFromArray($mediumHeaderStyle);
 			++$lastRowIndex;
 
@@ -688,16 +688,16 @@ class ReportModel extends SlaModel
 			// Summary info headers
 			$excelSheet->mergeCells('A' . $lastRowIndex . ':' . $summaryLastColumnStringIndex . $lastRowIndex)
 				->getCell('A' . $lastRowIndex)
-				->setValue('Сводная информация о нарушениях SLA');
+				->setValue('РЎРІРѕРґРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РЅР°СЂСѓС€РµРЅРёСЏС… SLA');
 			$excelSheet->getStyle('A' . $lastRowIndex)->applyFromArray($mediumHeaderStyle);
 			++$lastRowIndex;
 
 			$excelSheet->mergeCells('A' . $lastRowIndex . ':' . $summaryThresholdsLastColumnStringIndex . $lastRowIndex)
 				->getCell('A' . $lastRowIndex)
-				->setValue('Пороговые значения');
+				->setValue('РџРѕСЂРѕРіРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ');
 			$excelSheet->mergeCells($summaryDisparityFirstColumnStringIndex . $lastRowIndex . ':' . $summaryLastColumnStringIndex . $lastRowIndex)
 				->getCell($summaryDisparityFirstColumnStringIndex . $lastRowIndex)
-				->setValue('Несоответствие SLA');
+				->setValue('РќРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ SLA');
 			++$lastRowIndex;
 
 			// Threshold info data
@@ -739,7 +739,7 @@ class ReportModel extends SlaModel
 			// Threshold info note
 			$excelSheet->mergeCells('A' . $lastRowIndex . ':' . $summaryLastColumnStringIndex . $lastRowIndex)
 				->getCell('A' . $lastRowIndex)
-				->setValue('* Приведенные параметры качества измеряются при загрузке канала доступа к L2/L3 VPN или канала доступа в сеть «Интернет» не более 75% от установленной скорости потока данных');
+				->setValue('* РџСЂРёРІРµРґРµРЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ РєР°С‡РµСЃС‚РІР° РёР·РјРµСЂСЏСЋС‚СЃСЏ РїСЂРё Р·Р°РіСЂСѓР·РєРµ РєР°РЅР°Р»Р° РґРѕСЃС‚СѓРїР° Рє L2/L3 VPN РёР»Рё РєР°РЅР°Р»Р° РґРѕСЃС‚СѓРїР° РІ СЃРµС‚СЊ В«РРЅС‚РµСЂРЅРµС‚В» РЅРµ Р±РѕР»РµРµ 75% РѕС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕР№ СЃРєРѕСЂРѕСЃС‚Рё РїРѕС‚РѕРєР° РґР°РЅРЅС‹С…');
 			$excelSheet->getRowDimension($lastRowIndex)->setRowHeight(30);
 
 			$excelSheet->getStyle('A' . ($thresholdInfoFirstRowIndex + 3) . ':' . $summaryLastColumnStringIndex . $lastRowIndex)->applyFromArray($textStyle);
@@ -755,7 +755,7 @@ class ReportModel extends SlaModel
 			// Detail info headers
 			$excelSheet->mergeCells('A' . $lastRowIndex . ':' . $intervalsLastColumnStringIndex . $lastRowIndex)
 				->getCell('A' . $lastRowIndex)
-				->setValue('Детализация по нарушениях SLA');
+				->setValue('Р”РµС‚Р°Р»РёР·Р°С†РёСЏ РїРѕ РЅР°СЂСѓС€РµРЅРёСЏС… SLA');
 			$excelSheet->getStyle('A' . $lastRowIndex)->applyFromArray($mediumHeaderStyle);
 			++$lastRowIndex;
 
@@ -925,14 +925,14 @@ class ReportModel extends SlaModel
 		 */
 
 
-		$excelSheet->getCell('A' . $lastRowIndex)->setValue('Период:');
+		$excelSheet->getCell('A' . $lastRowIndex)->setValue('РџРµСЂРёРѕРґ:');
 		$excelSheet->mergeCells('B' . $lastRowIndex . ':' . $lastColumnStringIndex . $lastRowIndex);
 		if (isset($reportData['time_start']) && isset($reportData['time_end'])) {
-			$excelSheet->getCell('B' . $lastRowIndex)->setValue('С ' . $reportData['time_start'] . ' по ' . $reportData['time_end']);
+			$excelSheet->getCell('B' . $lastRowIndex)->setValue('РЎ ' . $reportData['time_start'] . ' РїРѕ ' . $reportData['time_end']);
 		}
 		++$lastRowIndex;
 
-		$excelSheet->getCell('A' . $lastRowIndex)->setValue('Сформирован:');
+		$excelSheet->getCell('A' . $lastRowIndex)->setValue('РЎС„РѕСЂРјРёСЂРѕРІР°РЅ:');
 		$excelSheet->mergeCells('B' . $lastRowIndex . ':' . $lastColumnStringIndex . $lastRowIndex);
 		if (isset($reportData['time_create'])) {
 			$excelSheet->getCell('B' . $lastRowIndex)
@@ -940,7 +940,7 @@ class ReportModel extends SlaModel
 		}
 		++$lastRowIndex;
 
-		$excelSheet->getCell('A' . $lastRowIndex)->setValue('Объект:');
+		$excelSheet->getCell('A' . $lastRowIndex)->setValue('РћР±СЉРµРєС‚:');
 		$excelSheet->mergeCells('B' . $lastRowIndex . ':' . $lastColumnStringIndex . $lastRowIndex);
 		if (isset($reportData['object_name'])) {
 			$excelSheet->getCell('B' . $lastRowIndex)
@@ -1074,15 +1074,15 @@ class ReportModel extends SlaModel
 		<div>
 			<table width="50%">
 				<tr>
-					<td style="font-family: \'timesbd_wr\';">Период:</td>
-					<td>С ' . $objectsData['time_start'] . ' по ' . $objectsData['time_end'] . '</td>
+					<td style="font-family: \'timesbd_wr\';">РџРµСЂРёРѕРґ:</td>
+					<td>РЎ ' . $objectsData['time_start'] . ' РїРѕ ' . $objectsData['time_end'] . '</td>
 				</tr>
 				<tr>
-					<td style="font-family: \'timesbd_wr\';">Сформирован:</td>
+					<td style="font-family: \'timesbd_wr\';">РЎС„РѕСЂРјРёСЂРѕРІР°РЅ:</td>
 					<td>' . $objectsData['time_create'] . '</td>
 				</tr>
 				<tr>
-					<td style="font-family: \'timesbd_wr\';">Объект:</td>
+					<td style="font-family: \'timesbd_wr\';">РћР±СЉРµРєС‚:</td>
 					<td>' . $objectsData['object_name'] . '</td>
 				</tr>
 			</table>
@@ -1124,8 +1124,8 @@ class ReportModel extends SlaModel
 		$w2 = array_sum(array_slice($summary['average_length'], 1 + $summary['count_thresholds'], count($summary['average_length']) - 1 - $summary['count_thresholds']));
 		$summaryTable .= '<tr>
 							<th width="' . $summary['average_length'][0] . '%"></th>
-							<th style="font-family: \'timesbd_wr\';" align="center" width="' . $w1 . '%" colspan="' . ($summary['count_thresholds']) . '">Пороговые значения</th>
-							<th style="font-family: \'timesbd_wr\';" align="center" width="' . $w2 . '%" colspan="' . (count($summary['thead']) - $summary['count_thresholds'] - 1) . '">Состояние оказания услуги</th>
+							<th style="font-family: \'timesbd_wr\';" align="center" width="' . $w1 . '%" colspan="' . ($summary['count_thresholds']) . '">РџРѕСЂРѕРіРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ</th>
+							<th style="font-family: \'timesbd_wr\';" align="center" width="' . $w2 . '%" colspan="' . (count($summary['thead']) - $summary['count_thresholds'] - 1) . '">РЎРѕСЃС‚РѕСЏРЅРёРµ РѕРєР°Р·Р°РЅРёСЏ СѓСЃР»СѓРіРё</th>
 						</tr>';
 
 
@@ -1169,10 +1169,10 @@ class ReportModel extends SlaModel
 			$summaryTable .= '</tr>';
 
 		}
-		$footnote = '* Приведенные параметры качества' .
-			' измеряются при загрузке канала доступа к L2/L3 VPN' .
-			' или канала доступа в сеть «Интернет»' .
-			' не более 75% от установленной скорости потока данных';
+		$footnote = '* РџСЂРёРІРµРґРµРЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ РєР°С‡РµСЃС‚РІР°' .
+			' РёР·РјРµСЂСЏСЋС‚СЃСЏ РїСЂРё Р·Р°РіСЂСѓР·РєРµ РєР°РЅР°Р»Р° РґРѕСЃС‚СѓРїР° Рє L2/L3 VPN' .
+			' РёР»Рё РєР°РЅР°Р»Р° РґРѕСЃС‚СѓРїР° РІ СЃРµС‚СЊ В«РРЅС‚РµСЂРЅРµС‚В»' .
+			' РЅРµ Р±РѕР»РµРµ 75% РѕС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕР№ СЃРєРѕСЂРѕСЃС‚Рё РїРѕС‚РѕРєР° РґР°РЅРЅС‹С…';
 		$summaryTable .= ' 	<tr>
 								<td style="font-size: 8px;" colspan="' . ($summary['count_thresholds'] + 1) . '" align="left">' . $footnote . '</td>
 								<td style="font-family: \'timesbd_wr\';" align="center">' . $summary['sum_total_items'] . '</td>
@@ -1186,7 +1186,7 @@ class ReportModel extends SlaModel
 		$pdf->writeHTML($summaryTable);
 
 //------------
-		//TODO: Выделить в отдельный метод
+		//TODO: Р’С‹РґРµР»РёС‚СЊ РІ РѕС‚РґРµР»СЊРЅС‹Р№ РјРµС‚РѕРґ
 		$servicesWithErrors = $objectsData['services_with_errors'];
 
 		$sumLen = array_sum($servicesWithErrors['average_length']);
@@ -1204,7 +1204,7 @@ class ReportModel extends SlaModel
 		}
 
 
-		$tableTitle = '<br /><div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">Услуги с нарушением SLA</div><br />';
+		$tableTitle = '<br /><div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">РЈСЃР»СѓРіРё СЃ РЅР°СЂСѓС€РµРЅРёРµРј SLA</div><br />';
 		$pdf->writeHTML($tableTitle);
 
 		$tableWithErrorsSla = '<table border="1" cellpadding="2">';
@@ -1332,15 +1332,15 @@ class ReportModel extends SlaModel
 			'<div>
 			<table width="100%" border="0">
 				<tr>
-					<td width="25%" style="font-family: \'timesbd_wr\';">Период:</td>
-					<td>С ' . $objectsData['time_start'] . ' по ' . $objectsData['time_end'] . '</td>
+					<td width="25%" style="font-family: \'timesbd_wr\';">РџРµСЂРёРѕРґ:</td>
+					<td>РЎ ' . $objectsData['time_start'] . ' РїРѕ ' . $objectsData['time_end'] . '</td>
 				</tr>
 				<tr>
-					<td style="font-family: \'timesbd_wr\';">Сформирован:</td>
+					<td style="font-family: \'timesbd_wr\';">РЎС„РѕСЂРјРёСЂРѕРІР°РЅ:</td>
 					<td>' . $objectsData['time_create'] . '</td>
 				</tr>
 				<tr>
-					<td style="font-family: \'timesbd_wr\';">Объект:</td>
+					<td style="font-family: \'timesbd_wr\';">РћР±СЉРµРєС‚:</td>
 					<td>' . $objectsData['object_name'] . '</td>
 				</tr>
 			</table>
@@ -1351,7 +1351,7 @@ class ReportModel extends SlaModel
 		$report = $objectsData['report'];
 		foreach ($report as $reportKey => $item) {
 
-			$tableTitle = '<div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">Информация об услуге</div>';
+			$tableTitle = '<div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">РРЅС„РѕСЂРјР°С†РёСЏ РѕР± СѓСЃР»СѓРіРµ</div>';
 			$pdf->writeHTML($tableTitle);
 
 			$serviceInformationTable = '
@@ -1370,7 +1370,7 @@ class ReportModel extends SlaModel
 			$pdf->Ln(3);
 
 			//generate table title
-			$tableTitle = '<div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">Сводная информация о нарушениях SLA</div>';
+			$tableTitle = '<div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">РЎРІРѕРґРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РЅР°СЂСѓС€РµРЅРёСЏС… SLA</div>';
 			$pdf->writeHTML($tableTitle);
 
 			$summary = $item['summary'];
@@ -1385,7 +1385,7 @@ class ReportModel extends SlaModel
 			<table border="1" cellpadding="2">
 				<thead>
 					<tr>
-						<th colspan="' . count($thresholds['thead']) . '" align="center" style="font-family: \'timesbd_wr\';">Пороговые значения</th>
+						<th colspan="' . count($thresholds['thead']) . '" align="center" style="font-family: \'timesbd_wr\';">РџРѕСЂРѕРіРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ</th>
 					</tr>';
 			$slaSummaryTables .= '<tr>';
 			foreach ($thresholds['thead'] as $thrHeadName) {
@@ -1407,7 +1407,7 @@ class ReportModel extends SlaModel
 				$slaSummaryTables .= '</tr>';
 			}
 
-			$footnote = '* Приведенные параметры качества измеряются при загрузке каналадоступа к L2/L3 VPN или канала доступа в сеть «Интернет» не более 75% от установленной скорости потока данных';
+			$footnote = '* РџСЂРёРІРµРґРµРЅРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ РєР°С‡РµСЃС‚РІР° РёР·РјРµСЂСЏСЋС‚СЃСЏ РїСЂРё Р·Р°РіСЂСѓР·РєРµ РєР°РЅР°Р»Р°РґРѕСЃС‚СѓРїР° Рє L2/L3 VPN РёР»Рё РєР°РЅР°Р»Р° РґРѕСЃС‚СѓРїР° РІ СЃРµС‚СЊ В«РРЅС‚РµСЂРЅРµС‚В» РЅРµ Р±РѕР»РµРµ 75% РѕС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕР№ СЃРєРѕСЂРѕСЃС‚Рё РїРѕС‚РѕРєР° РґР°РЅРЅС‹С…';
 
 			$slaSummaryTables .= '
 			<tfoot>
@@ -1422,7 +1422,7 @@ class ReportModel extends SlaModel
 			$slaSummaryTables .= '<td width="55%">
 			<table border="1" cellpadding="2"><thead>
 				<tr>
-					<td colspan="' . count($disparity['thead']) . '" align="center" style="font-family: \'timesbd_wr\';">Несоответствие SLA</td>
+					<td colspan="' . count($disparity['thead']) . '" align="center" style="font-family: \'timesbd_wr\';">РќРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ SLA</td>
 				</tr>';
 			$slaSummaryTables .= '<tr>';
 			foreach ($disparity['thead'] as $dispHeadName) {
@@ -1451,7 +1451,7 @@ class ReportModel extends SlaModel
 			$pdf->AddPage();
 
 			//generate table title
-			$tableTitle = '<div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">Детализация по нарушениям SLA</div><br />';
+			$tableTitle = '<div align="center" style="font-size: 14px;font-family: \'timesbd_wr\';">Р”РµС‚Р°Р»РёР·Р°С†РёСЏ РїРѕ РЅР°СЂСѓС€РµРЅРёСЏРј SLA</div><br />';
 			$pdf->writeHTML($tableTitle);
 
 			$intervals = $item['intervals'];
@@ -1572,15 +1572,15 @@ class ReportModel extends SlaModel
 		<div>
 			<table width="100%">
 				<tr>
-					<td width="25%" style="font-family: \'timesbd_wr\';">Период:</td>
-					<td>С ' . $reportData['time_start'] . ' по ' . $reportData['time_end'] . '</td>
+					<td width="25%" style="font-family: \'timesbd_wr\';">РџРµСЂРёРѕРґ:</td>
+					<td>РЎ ' . $reportData['time_start'] . ' РїРѕ ' . $reportData['time_end'] . '</td>
 				</tr>
 				<tr>
-					<td style="font-family: \'timesbd_wr\';">Сформирован:</td>
+					<td style="font-family: \'timesbd_wr\';">РЎС„РѕСЂРјРёСЂРѕРІР°РЅ:</td>
 					<td>' . $reportData['time_create'] . '</td>
 				</tr>
 				<tr>
-					<td style="font-family: \'timesbd_wr\';">Объект:</td>
+					<td style="font-family: \'timesbd_wr\';">РћР±СЉРµРєС‚:</td>
 					<td>' . $reportData['object_name'] . '</td>
 				</tr>
 			</table>
@@ -1662,7 +1662,7 @@ class ReportModel extends SlaModel
 			'object_name' => $reportData->parameter->object_name
 		);
 
-		$thead = array('Вид услуги');
+		$thead = array('Р’РёРґ СѓСЃР»СѓРіРё');
 
 		$codes = array();
 		$format = array();
@@ -1673,7 +1673,7 @@ class ReportModel extends SlaModel
 			$theadFromMetric[] = $metric['threshold_name'] !== null ? $metric['threshold_name'] : $metric['name'];
 			$codes[] = $metric['code'];
 			foreach($metric['items'] as $keyItem => $item) {
-				if (property_exists($servicesWithErrors[0], $metric['code'])) {//нужно выбрать только те, что есть и в ответе и в метрике
+				if (property_exists($servicesWithErrors[0], $metric['code'])) {//РЅСѓР¶РЅРѕ РІС‹Р±СЂР°С‚СЊ С‚РѕР»СЊРєРѕ С‚Рµ, С‡С‚Рѕ РµСЃС‚СЊ Рё РІ РѕС‚РІРµС‚Рµ Рё РІ РјРµС‚СЂРёРєРµ
 					if (isset($item['comparison_value']) && $item['comparison_value'] !== null) {
 						if(!isset($needGetMetricValue[$keyMetric])) {
 							$needGetMetricValue[$keyMetric] = array();
@@ -1713,7 +1713,7 @@ class ReportModel extends SlaModel
 
 
 
-		//для контроля необходимости проверять items  в метрике
+		//РґР»СЏ РєРѕРЅС‚СЂРѕР»СЏ РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РїСЂРѕРІРµСЂСЏС‚СЊ items  РІ РјРµС‚СЂРёРєРµ
 		foreach($needGetMetricValue as $k => $m) {
 			$flagNeeded = false;
 			foreach($m as $i) {
@@ -1732,9 +1732,9 @@ class ReportModel extends SlaModel
 
 
 		$thead = array_merge($thead, $theadFromMetric);
-		$thead[] = 'Кол-во услуг';
-		$thead[] = 'С нарушениями SLA';
-		$thead[] = 'Без нарушений SLA';
+		$thead[] = 'РљРѕР»-РІРѕ СѓСЃР»СѓРі';
+		$thead[] = 'РЎ РЅР°СЂСѓС€РµРЅРёСЏРјРё SLA';
+		$thead[] = 'Р‘РµР· РЅР°СЂСѓС€РµРЅРёР№ SLA';
 
 		$avgLen = array();
 
@@ -1860,7 +1860,7 @@ class ReportModel extends SlaModel
 
 		//--------------------------------
 
-		$thead = array('№ п/п');
+		$thead = array('в„– Рї/Рї');
 
 		$headStructure = array();
 		$addressStructure = array();
@@ -1878,7 +1878,7 @@ class ReportModel extends SlaModel
 			}
 		}
 
-		$thead[] = 'Адрес оказания услуги';
+		$thead[] = 'РђРґСЂРµСЃ РѕРєР°Р·Р°РЅРёСЏ СѓСЃР»СѓРіРё';
 		$headStructure[] = 'address';
 
 		$tmpMetric = array();
@@ -1900,26 +1900,26 @@ class ReportModel extends SlaModel
 						$headStructure[$insertIndexArr][] = array(
 							$code,
 							'threshold_value.' . $code,
-							array(//сравнивать со значением
+							array(//СЃСЂР°РІРЅРёРІР°С‚СЊ СЃРѕ Р·РЅР°С‡РµРЅРёРµРј
 								'comparison_operator' => $item['comparison_operator'],
 								'comparison_value' => $item['comparison_value']),
-								$format[$key][$keyMetric]
+							$format[$key][$keyMetric]
 						);
 					} else {
 						if(!isset($headStructure[$insertIndexArr])) {
 							$headStructure[$insertIndexArr] = array();
 						}
-						$headStructure[$insertIndexArr][] = array(//сравнивать с порогом
+						$headStructure[$insertIndexArr][] = array(//СЃСЂР°РІРЅРёРІР°С‚СЊ СЃ РїРѕСЂРѕРіРѕРј
 							$code,
 							'threshold_value.' . $code,
 							array(
 								'comparison_operator' => $item['comparison_operator'],
 								'comparison_value' => 'threshold'),
-								$format[$key][$keyMetric]
+							$format[$key][$keyMetric]
 						);
 					}
 				} else {
-					$headStructure[$insertIndexArr][] = array($code, 'threshold_value.' . $code, false, $format[$key][$keyMetric]);//не сравнивать
+					$headStructure[$insertIndexArr][] = array($code, 'threshold_value.' . $code, false, $format[$key][$keyMetric]);//РЅРµ СЃСЂР°РІРЅРёРІР°С‚СЊ
 				}
 			}
 			$insertIndexArr++;
@@ -1929,31 +1929,31 @@ class ReportModel extends SlaModel
 		 "addfields": [{
 		"field":"deviation_duration",
 		"threshold":"deviation_threshold",
-		"name": "Длительность Отклонения от QoS, чч:мм:сс",
+		"name": "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РћС‚РєР»РѕРЅРµРЅРёСЏ РѕС‚ QoS, С‡С‡:РјРј:СЃСЃ",
 		"format_type": 3
 	}],
 		 */
 
-if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
-	foreach ($parameter['addfields'] as $fieldItem) {
-		if (isset($fieldItem['name'])) {
-			$thead[] = $fieldItem['name'];
-			if (empty($fieldItem['threshold'])) {
-				$headStructure[] = $fieldItem['field'];
-			} else {
-				$headStructure[] = array(
-					$fieldItem['field'],
-					$fieldItem['threshold'],
-					false,
-					array(
-						'type' => 'interval',
-						'format_string' => 'HH:MM:SS'
-					)
-				);
+		if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
+			foreach ($parameter['addfields'] as $fieldItem) {
+				if (isset($fieldItem['name'])) {
+					$thead[] = $fieldItem['name'];
+					if (empty($fieldItem['threshold'])) {
+						$headStructure[] = $fieldItem['field'];
+					} else {
+						$headStructure[] = array(
+							$fieldItem['field'],
+							$fieldItem['threshold'],
+							false,
+							array(
+								'type' => 'interval',
+								'format_string' => 'HH:MM:SS'
+							)
+						);
+					}
+				}
 			}
 		}
-	}
-}
 
 
 
@@ -2014,7 +2014,7 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 								}
 							} else {
 								$second = $fieldNameValue[2]['comparison_value'];
-								$threshold = $second;//специально для 1го порога
+								$threshold = $second;//СЃРїРµС†РёР°Р»СЊРЅРѕ РґР»СЏ 1РіРѕ РїРѕСЂРѕРіР°
 								$needPaint = true;
 							}
 
@@ -2133,28 +2133,28 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 			}
 
 
-/*
-			$tdataLen = count($tdata[$i]);
-			for ($j = 0; $j < $tdataLen; $j++) {
+			/*
+                        $tdataLen = count($tdata[$i]);
+                        for ($j = 0; $j < $tdataLen; $j++) {
 
-				if (is_array($tdata[$i][$j])) {
-					$avgLen[$j] = max(
-						$avgLen[$j],
-						mb_strlen($tdata[$i][$j][0], 'utf-8'),
-						mb_strlen($tdata[$i][$j][1], 'utf-8')
-					);
-				} else {
-					$tmpArr = explode(' ', $tdata[$i][$j]);
-					foreach ($tmpArr as &$value) {
-						$value = mb_strlen($value, 'utf-8');
-					}
-					$avgLen[$j] = max(
-						$avgLen[$j],
-						max($tmpArr)
-					);
-				}
-			}
-			*/
+                            if (is_array($tdata[$i][$j])) {
+                                $avgLen[$j] = max(
+                                    $avgLen[$j],
+                                    mb_strlen($tdata[$i][$j][0], 'utf-8'),
+                                    mb_strlen($tdata[$i][$j][1], 'utf-8')
+                                );
+                            } else {
+                                $tmpArr = explode(' ', $tdata[$i][$j]);
+                                foreach ($tmpArr as &$value) {
+                                    $value = mb_strlen($value, 'utf-8');
+                                }
+                                $avgLen[$j] = max(
+                                    $avgLen[$j],
+                                    max($tmpArr)
+                                );
+                            }
+                        }
+                        */
 		}
 
 		$result['services_with_errors'] = array(
@@ -2219,7 +2219,7 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 				'service_information' => array(
 					$fields['administration']['name'] => $item->{'administration.name'},
 					$fields['office']['name'] => $item->{'office.name'},
-					'Адрес оказания услуги' => $address,
+					'РђРґСЂРµСЃ РѕРєР°Р·Р°РЅРёСЏ СѓСЃР»СѓРіРё' => $address,
 					$fields['service']['name'] => $item->{'service.name'},
 				)
 			);
@@ -2235,14 +2235,14 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 				}
 			}
 
-			$variableHeadStructureT = array('Значение', 'Длительность');
+			$variableHeadStructureT = array('Р—РЅР°С‡РµРЅРёРµ', 'Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ');
 			$thresholdsTable = array(
-				'thead' => array('Характеристика'),//длительность
+				'thead' => array('РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°'),//РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ
 				'tdata' => array()
 			);
-			$variableHeadStructureD = array('Значение', 'Длительность');
+			$variableHeadStructureD = array('Р—РЅР°С‡РµРЅРёРµ', 'Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ');
 			$disparityTable = array(
-				'thead' => array('Характеристика'),
+				'thead' => array('РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°'),
 				'tdata' => array()
 			);
 
@@ -2250,7 +2250,7 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 				foreach ($metrics as $metric) {
 					if ($metric['code'] == $thresholdName && $metric['hidden'] != 1) {
 
-						$indexOfItems = array();//для понимания последовательности отображения
+						$indexOfItems = array();//РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ
 						$thrArrValues = $thresholdItem->value;
 						$format = array();
 						foreach ($metric['items'] as $metricItemKey => $metricItem) {
@@ -2382,7 +2382,7 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 				}
 			}
 
-			//вырваниваем число столбцов в заголовках и в данных
+			//РІС‹СЂРІР°РЅРёРІР°РµРј С‡РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ РІ Р·Р°РіРѕР»РѕРІРєР°С… Рё РІ РґР°РЅРЅС‹С…
 
 
 			$delta = count($thresholdsTable['tdata'][0]) - count($thresholdsTable['thead']);
@@ -2413,12 +2413,12 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 
 			//intervals
 			$thead = array(
-				'№ п/п',
-				'Дата начала',
-				'Дата окончания',
-				'Длительность, чч:мм:cc',
-				'Характеристика',
-				'Причина'
+				'в„– Рї/Рї',
+				'Р”Р°С‚Р° РЅР°С‡Р°Р»Р°',
+				'Р”Р°С‚Р° РѕРєРѕРЅС‡Р°РЅРёСЏ',
+				'Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ, С‡С‡:РјРј:cc',
+				'РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°',
+				'РџСЂРёС‡РёРЅР°'
 			);
 
 			$intervals = $item->intervals;
@@ -2572,7 +2572,7 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 			$startAngle = $endAngle;
 
 			$pdf->Rect($xOfRightLegend, $yLegend + $aRect * $i * 2, $aRect, $aRect, 'DF');
-			$pdf->Text($xOfRightLegend + 2 * $aRect, $yLegend - $aRect, "Без нарушений " . $percent_without . "%");
+			$pdf->Text($xOfRightLegend + 2 * $aRect, $yLegend - $aRect, "Р‘РµР· РЅР°СЂСѓС€РµРЅРёР№ " . $percent_without . "%");
 
 			$i++;
 
@@ -2591,7 +2591,7 @@ if(isset($parameter['addfields']) && is_array($parameter['addfields'])) {
 			$startAngle = $endAngle;
 
 			$pdf->Rect($xOfRightLegend, $yLegend + $aRect * $i * 2, $aRect, $aRect, 'DF');
-			$pdf->Text($xOfRightLegend + 2 * $aRect, $yLegend + $aRect, "С нарушениями " . round(100 - $percent_without, 1) . "%");
+			$pdf->Text($xOfRightLegend + 2 * $aRect, $yLegend + $aRect, "РЎ РЅР°СЂСѓС€РµРЅРёСЏРјРё " . round(100 - $percent_without, 1) . "%");
 
 			$pdf->SetY($y + 2 * $r);
 			//return $pdf->getY();
